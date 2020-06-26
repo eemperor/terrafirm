@@ -254,6 +254,7 @@ install-watchmaker() {
   fi
 
   # Update submodule refs
+  try_cmd 1 git submodule sync
   try_cmd 1 git submodule update --init --recursive
 
   # Install watchmaker

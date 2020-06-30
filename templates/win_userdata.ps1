@@ -316,9 +316,8 @@ function Install-Watchmaker {
       Test-Command "git checkout $GitRef"
     }
   }
-  #Test-Command "git submodule update"
-  Test-Command "git submodule sync --recursive"
-  Test-Command "git submodule update --init --recursive --remote"
+  Test-Command "git submodule sync"
+  Test-Command "git submodule update --init --recursive"
   Test-Command "pip install --upgrade --index-url `"$PypiUrl`" --editable ."
 }
 

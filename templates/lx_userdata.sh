@@ -255,7 +255,12 @@ install-watchmaker() {
 
   # Update submodule refs
   try_cmd 1 git submodule sync
-  try_cmd 1 git submodule update --init --recursive
+  if [[ $(cat /proc/version | grep -o 'el.') == 'el6' ]] ; then
+    try_cmd 1 git submodule foreach -q --recursive 'branch="$(git config -f .gitmodules submodule.$name.branch)"; git checkout $branch'
+    try_cmd 1 git submodule update --recursive
+  else
+    try_cmd 1 git submodule update --init --recursive --remote
+  fi
 
   # Install watchmaker
   try_cmd 1 python3 -m pip install --upgrade --index-url "$PYPI_URL" --editable .
